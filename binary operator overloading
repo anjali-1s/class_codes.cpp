@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+// for n value
+  class value;
+  value operator + (int n,value v);
+  class Number;
+
+
+class value {
+      public :
+         int integ;
+         int frac;
+
+     value () {
+          integ = 0;
+          frac = 0;
+     }
+    
+    value (int i, int f) {
+         integ = i;
+         frac = f;
+    }
+
+    void show () {
+     cout <<"value =" << integ <<"." <<frac <<endl;
+    }
+  // A + B
+    value operator + (int x) {
+     value v;
+     v.integ = integ + x;
+     v.frac = frac + x;
+
+     if (v.frac % 10 > 5) {
+          v.integ++;
+          return v;
+     }
+    }
+  // A + A
+  value operator + (value x) {
+     value v;
+     v.integ = integ + x.integ;
+     v.frac = frac + x.frac;
+     return v;
+  }
+
+  friend value operator + (int n, value v);
+  friend value operator + (value v, Number n);
+
+};
+
+  value operator + (int n,value v) {
+     value x;
+     x.integ = n + v.integ;
+     x.frac = v.frac + n;
+
+     return x;
+  }
+
+  class Number {
+     int N;
+  public :
+     Number() {
+          N = 0;
+     }
+
+     Number (int i) {
+          N = i;
+     }
+
+     friend value operator + (value v,Number n);
+    
+  };
+
+  value operator + (value v, Number n) {
+     value x;
+     x.integ = v.integ + n.N;
+     x.frac = v.frac + n.N;
+     return x; 
+  }
+
+int main () {
+        value v1 (18,1);
+        value v2(20,2);
+        value v3;
+        v3 = v1 + v2;
+        v3.show();
+
+        cout <<"Or another way to print" << endl;
+        cout<<v3.integ<<endl;
+        cout<<v3.frac<<endl;
+        return 0;
+}
